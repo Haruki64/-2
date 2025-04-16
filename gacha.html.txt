@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>簡易ガチャ</title>
+</head>
+<body>
+  <h1>ガチャシステム</h1>
+  <button onclick="drawSingle()">単発ガチャ</button>
+  <button onclick="drawTen()">10連ガチャ</button>
+  <div id="result" style="margin-top:20px;font-size:20px;"></div>
+
+  <script>
+    const items = {
+      common: ["木の剣", "草の盾", "ポーション"],
+      rare: ["銀の剣", "金の盾", "回復薬"],
+      legendary: ["エクスカリバー", "ドラゴンの鎧"]
+    };
+
+    const probabilities = {
+      common: 0.7,
+      rare: 0.2,
+      legendary: 0.1
+    };
+
+    function drawGacha() {
+      const rand = Math.random();
+      if (rand < probabilities.common) {
+        return randomItem(items.common);
+      } else if (rand < probabilities.common + probabilities.rare) {
+        return randomItem(items.rare);
+      } else {
+        return randomItem(items.legendary);
+      }
+    }
+
+    function randomItem(list) {
+      return list[Math.floor(Math.random() * list.length)];
+    }
+
+    function drawSingle() {
+      document.getElementById("result").innerText = "単発ガチャ結果: " + drawGacha();
+    }
+
+    function drawTen() {
+      let results = [];
+      for (let i = 0; i < 10; i++) {
+        results.push(drawGacha());
+      }
+      document.getElementById("result").innerText = "10連ガチャ結果: " + results.join(", ");
+    }
+  </script>
+</body>
+</html>
